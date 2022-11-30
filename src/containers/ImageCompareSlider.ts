@@ -4,11 +4,13 @@
  */
 
 import { DomTools } from 'mibreit-dom-tools';
+import SliderHandle from './SliderHandle';
 import styles from './ImageCompareSlider.module.css';
 
 export default class ImageCompareSlider {
   private _image: HTMLElement;
-
+  private _sliderHandle: SliderHandle;
+ 
   constructor(image: HTMLElement) {
     this._image = image;
     this._prepareImage(image);
@@ -23,14 +25,18 @@ export default class ImageCompareSlider {
 
   private _prepareSlider(): void {
     let moveActive = false;
+
     const touchArea = DomTools.createElement('div');
     DomTools.addCssClass(touchArea, styles.touchArea);
-    DomTools.appendAfterChild(touchArea, this._image);
+    DomTools.appendAfterChild(touchArea, this._image); 
     DomTools.appendChildElement(this._image, touchArea);
-    DomTools.addCssStyle(this._image, "position", "relative");
+
+    this._sliderHandle = new SliderHandle(touchArea);
+
+    DomTools.addCssStyle(this._image, 'position', 'relative');
     DomTools.addEventListener(touchArea, 'pointerdown', (event: PointerEvent) => {
       moveActive = true;
-      this._updateClipping(event.pageX);
+      this._updateComparison(event.pageX);
     });
     DomTools.addEventListener(touchArea, 'pointerup', () => {
       moveActive = false;
@@ -40,16 +46,22 @@ export default class ImageCompareSlider {
     });
     DomTools.addEventListener(touchArea, 'pointermove', (event: PointerEvent) => {
       if (moveActive) {
-        this._updateClipping(event.pageX);
+        this._updateComparison(event.pageX);
       }
     });
   }
 
-  private _updateClipping = (posX: number) =>
-  { 
-    const imageDimension : DOMRect = this._image.getBoundingClientRect();
-    const clipPosition = imageDimension.width + imageDimension.x - posX;
-    console.log("ImageCompareSlider#_updateClipping", clipPosition);
-    DomTools.addCssStyle(this._image, 'clip-path', `inset(0 ${clipPosition}px 0 0)`);
-  }
+  private _updateComparison = (posX: number): void => {
+    const imageDimension: DOMRect = this._image.getBoundingClientRect();
+    const clippingPos: number = imageDimension.width + imageDimension.x - posX;
+    const sliderPos: number = posX - imageDimension.x;
+
+    this._updateClipping(clippingPos);
+    this._sliderHandle.updatePosition(sliderPos);
+  };
+
+  private _updateClipping = (posX: number) => {
+    console.log('ImageCompareSlider#_updateClipping', posX);
+    DomTools.addCssStyle(this._image, 'clip-path', `inset(0 ${posX}px 0 0)`);
+  };
 }
