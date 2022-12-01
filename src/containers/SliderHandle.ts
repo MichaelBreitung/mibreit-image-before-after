@@ -3,7 +3,13 @@
  * @copyright Michael Breitung Photography (www.mibreit-photo.com)
  */
 
-import { DomTools } from 'mibreit-dom-tools';
+ import {
+  addCssClass,
+  addCssStyle,
+  createElement,
+  setInnerHtml,
+  appendChildElement,
+} from 'mibreit-dom-tools';
 import leftRightImage from '../images/leftRight.svg';
 import styles from './SliderHandle.module.css';
 
@@ -13,29 +19,29 @@ export default class SliderHandle
 
   constructor (parent: HTMLElement)
   {
-    this._slider = DomTools.createElement('div');
-    DomTools.addCssClass(this._slider, styles.slider);
-    DomTools.appendChildElement(this._slider, parent);
+    this._slider = createElement('div');
+    addCssClass(this._slider, styles.slider);
+    appendChildElement(this._slider, parent);
 
-    const sliderBar = DomTools.createElement('div');
-    DomTools.addCssClass(sliderBar, styles.sliderBar);
-    DomTools.appendChildElement(sliderBar, this._slider);
+    const sliderBar = createElement('div');
+    addCssClass(sliderBar, styles.sliderBar);
+    appendChildElement(sliderBar, this._slider);
 
-    const sliderHandle = DomTools.createElement('div');
-    DomTools.addCssClass(sliderHandle, styles.sliderHandle);
-    DomTools.appendChildElement(sliderHandle, this._slider);
+    const sliderHandle = createElement('div');
+    addCssClass(sliderHandle, styles.sliderHandle);
+    appendChildElement(sliderHandle, this._slider);
 
-    const right = DomTools.createElement('div');
-    DomTools.setInnerHtml(right, leftRightImage);
-    DomTools.appendChildElement(right, this._slider);
+    const right = createElement('div');
+    setInnerHtml(right, leftRightImage);
+    appendChildElement(right, this._slider);
 
-    const left = DomTools.createElement('div');
-    DomTools.setInnerHtml(left, leftRightImage);
-    DomTools.addCssClass(left, styles.left);
-    DomTools.appendChildElement(left, this._slider);
+    const left = createElement('div');
+    setInnerHtml(left, leftRightImage);
+    addCssClass(left, styles.left);
+    appendChildElement(left, this._slider);
   }
 
   public updatePosition(posX: number) : void{
-    DomTools.addCssStyle(this._slider, 'margin-left', `${posX}px`);
+    addCssStyle(this._slider, 'margin-left', `${posX}px`);
   }
 }

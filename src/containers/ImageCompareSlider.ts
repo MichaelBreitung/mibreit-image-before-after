@@ -3,14 +3,23 @@
  * @copyright Michael Breitung Photography (www.mibreit-photo.com)
  */
 
-import { DomTools } from 'mibreit-dom-tools';
+import {
+  disableContextMenu,
+  disableDragging,
+  addCssClass,
+  addCssStyle,
+  createElement,
+  appendAfterChild,
+  appendChildElement,
+  addEventListener
+} from 'mibreit-dom-tools';
 import SliderHandle from './SliderHandle';
 import styles from './ImageCompareSlider.module.css';
 
 export default class ImageCompareSlider {
   private _image: HTMLElement;
   private _sliderHandle: SliderHandle;
- 
+
   constructor(image: HTMLElement) {
     this._image = image;
     this._prepareImage(image);
@@ -19,41 +28,40 @@ export default class ImageCompareSlider {
   }
 
   private _prepareImage(image: HTMLElement): void {
-    DomTools.disableContextMenu(image);
-    DomTools.disableDragging(image);
-    DomTools.addCssClass(image, styles.selectDisable);
+    disableContextMenu(image);
+    disableDragging(image);
+    addCssClass(image, styles.selectDisable);
   }
 
   private _prepareSlider(): void {
     let moveActive = false;
 
-    const touchArea = DomTools.createElement('div');
-    DomTools.addCssClass(touchArea, styles.touchArea);
-    DomTools.appendAfterChild(touchArea, this._image); 
-    DomTools.appendChildElement(this._image, touchArea);
+    const touchArea = createElement('div');
+    addCssClass(touchArea, styles.touchArea);
+    appendAfterChild(touchArea, this._image);
+    appendChildElement(this._image, touchArea);
 
     this._sliderHandle = new SliderHandle(touchArea);
 
-    DomTools.addCssStyle(this._image, 'position', 'relative');
-    DomTools.addEventListener(touchArea, 'pointerdown', (event: PointerEvent) => {
+    addCssStyle(this._image, 'position', 'relative');
+    addEventListener(touchArea, 'pointerdown', (event: PointerEvent) => {
       moveActive = true;
       this._updateComparison(event.pageX);
     });
-    DomTools.addEventListener(touchArea, 'pointerup', () => {
+    addEventListener(touchArea, 'pointerup', () => {
       moveActive = false;
     });
-    DomTools.addEventListener(touchArea, 'pointerleave', () => {
+    addEventListener(touchArea, 'pointerleave', () => {
       moveActive = false;
     });
-    DomTools.addEventListener(touchArea, 'pointermove', (event: PointerEvent) => {
+    addEventListener(touchArea, 'pointermove', (event: PointerEvent) => {
       if (moveActive) {
         this._updateComparison(event.pageX);
       }
     });
   }
 
-  private _initCenterPosition() : void
-  {
+  private _initCenterPosition(): void {
     const imageDimension: DOMRect = this._image.getBoundingClientRect();
     const centerPos = imageDimension.width / 2;
     this._updateClippingRight(centerPos);
@@ -71,6 +79,6 @@ export default class ImageCompareSlider {
 
   private _updateClippingRight = (posX: number) => {
     console.log('ImageCompareSlider#_updateClippingRight', posX);
-    DomTools.addCssStyle(this._image, 'clip-path', `inset(0 ${posX}px 0 0)`);
+    addCssStyle(this._image, 'clip-path', `inset(0 ${posX}px 0 0)`);
   };
 }
