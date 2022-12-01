@@ -8,6 +8,7 @@ export default class ImageCompareSlider {
     constructor(image: HTMLElement);
     private _prepareImage;
     private _prepareSlider;
+    private _initCenterPosition;
     private _updateComparison;
-    private _updateClipping;
+    private _updateClippingRight;
 }

@@ -15,6 +15,7 @@ export default class ImageCompareSlider {
     this._image = image;
     this._prepareImage(image);
     this._prepareSlider();
+    this._initCenterPosition();
   }
 
   private _prepareImage(image: HTMLElement): void {
@@ -51,17 +52,25 @@ export default class ImageCompareSlider {
     });
   }
 
+  private _initCenterPosition() : void
+  {
+    const imageDimension: DOMRect = this._image.getBoundingClientRect();
+    const centerPos = imageDimension.width / 2;
+    this._updateClippingRight(centerPos);
+    this._sliderHandle.updatePosition(centerPos);
+  }
+
   private _updateComparison = (posX: number): void => {
     const imageDimension: DOMRect = this._image.getBoundingClientRect();
     const clippingPos: number = imageDimension.width + imageDimension.x - posX;
     const sliderPos: number = posX - imageDimension.x;
 
-    this._updateClipping(clippingPos);
+    this._updateClippingRight(clippingPos);
     this._sliderHandle.updatePosition(sliderPos);
   };
 
-  private _updateClipping = (posX: number) => {
-    console.log('ImageCompareSlider#_updateClipping', posX);
+  private _updateClippingRight = (posX: number) => {
+    console.log('ImageCompareSlider#_updateClippingRight', posX);
     DomTools.addCssStyle(this._image, 'clip-path', `inset(0 ${posX}px 0 0)`);
   };
 }
