@@ -1,4 +1,4 @@
-# imageBeforeAfter
+# mibreit-image-before-after
 
 ## About
 
