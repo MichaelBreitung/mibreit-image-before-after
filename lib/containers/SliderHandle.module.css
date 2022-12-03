@@ -1,0 +1,42 @@
+.slider {
+  position: absolute;
+  top:0;
+  height: 100%;
+  z-index: 1;
+  opacity: 50%;
+  touch-action: none;
+  pointer-events: none;
+}
+
+.sliderBar {
+  position: absolute;
+  height: 100%;
+  width: 0.2rem;
+  background-color: white;
+}
+
+.sliderHandle {
+  position: absolute;
+  top:50%;
+  margin-left: -1.4rem;
+  margin-top: -1.4rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.slider svg {
+  position: absolute;
+  top: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: -0.6rem;
+  margin-left: 0.05rem;
+  fill: #727f88;
+}
+
+.slider .left svg {
+  transform: scaleX(-1);
+  margin-left: -1.4rem;
+}

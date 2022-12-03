@@ -1,5 +1,5 @@
 {
-  "name": "mibreitImageCompare",
+  "name": "mibreitImageBeforeAfter",
   "version": "0.0.1",
   "description": "Image comparison in before and after fashion",
   "main": "lib/index.js",
@@ -8,7 +8,7 @@
     "build": "webpack --config webpack.config.js",
     "build:dev": "webpack --config webpack.config.dev.js",
     "build:npm": "webpack --config webpack.config.npm.js",
-    "build:npm-es6": "tsc"
+    "build:npm-es6": "rimraf lib/ && tsc && copyfiles -u 1 src/**/*.svg src/**/*.css lib/"
   },
   "keywords": [
     "Typescript"
@@ -19,10 +19,12 @@
     "mibreit-dom-tools": "github:MichaelBreitung/mibreit-dom-tools"
   },
   "devDependencies": {
+    "copyfiles": "^2.4.1",
     "css-loader": "^6.7.2",
+    "raw-loader": "^4.0.2",
+    "rimraf": "^3.0.2",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.4.1",
-    "raw-loader": "^4.0.2",
     "typescript": "^4.1.3",
     "typescript-plugin-css-modules": "^3.4.0",
     "webpack": "^5.17.0",
