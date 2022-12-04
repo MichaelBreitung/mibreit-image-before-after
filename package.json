@@ -1,14 +1,14 @@
 {
   "name": "mibreit-image-before-after",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Image comparison in before and after fashion",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "build:dev": "webpack --config webpack.config.dev.js",
-    "build:npm": "rimraf lib/ && webpack --config webpack.config.npm.js",
-    "build:npm-es6": "rimraf lib/ && tsc && copyfiles -u 1 src/**/*.svg src/**/*.css lib/"
+    "prebuild:npm": "rimraf lib/",
+    "build:npm": "webpack --config webpack.config.npm.js"
   },
   "keywords": [
     "Typescript"
