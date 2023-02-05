@@ -49,3 +49,7 @@ For it to work, it's important to set up the two images you want to compare prop
       user-select: none;
     }
   ````
+
+  ## Note
+
+  The touch area will be placed at z-index 10. If you have other elements in your homepage, you want to place on top of that make sure to use a higher z-index
